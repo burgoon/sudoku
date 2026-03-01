@@ -1,0 +1,23 @@
+{
+  "name": "goonbits-sudoku",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "services/api",
+    "infra/cdk"
+  ],
+  "scripts": {
+    "build": "npm run build:web",
+    "build:web": "npm -w apps/web run build",
+    "typecheck:api": "npm -w services/api run typecheck",
+    "deploy": "npm run build && npm -w infra/cdk run deploy",
+    "destroy": "npm -w infra/cdk run destroy",
+    "dev": "concurrently -n web,api -c blue,green \"npm -w apps/web run dev\" \"npm -w services/api run dev\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "prettier": "^3.8.1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "goonbits-sudoku-infra",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "deploy": "npm run build && npx cdk deploy",
+    "destroy": "npm run build && npx cdk destroy"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.160.0",
+    "constructs": "^10.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}
