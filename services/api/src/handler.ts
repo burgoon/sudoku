@@ -1,4 +1,9 @@
-import { ALL_DIFFICULTIES, DIFFICULTY_LABELS, difficultyConfig } from "./types.js";
+import {
+  ALL_DIFFICULTIES,
+  DIFFICULTY_LABELS,
+  difficultyConfig,
+  maxCountForDifficulty,
+} from "./types.js";
 import type {
   Difficulty,
   DifficultyOption,
@@ -55,7 +60,9 @@ export async function handler(event: any): Promise<ApiResponse> {
     body = {};
   }
 
-  const { title, count, difficulty, font, includeCover, includeContents } = sanitiseInput(body);
+  const input = sanitiseInput(body);
+  const { title, difficulty, font, includeCover, includeContents } = input;
+  const count = Math.min(input.count, maxCountForDifficulty(difficulty));
 
   // Build per-puzzle difficulty list
   const difficultyList: Difficulty[] =

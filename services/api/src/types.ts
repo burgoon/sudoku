@@ -16,20 +16,27 @@ export interface DifficultyConfig {
   targetGivens: number;
   maxPerUnit: number;
   attemptsPerPuzzle: number;
+  maxCount: number;
 }
 
 const DIFFICULTY_CONFIGS: Record<Difficulty, DifficultyConfig> = {
   // targetGivens: how many cells are pre-filled (fewer = harder)
   // maxPerUnit: max givens allowed in any single row/col/box (prevents easy clusters)
   // attemptsPerPuzzle: harder puzzles need more generation retries
-  easy: { targetGivens: 38, maxPerUnit: 6, attemptsPerPuzzle: 40 },
-  medium: { targetGivens: 30, maxPerUnit: 5, attemptsPerPuzzle: 80 },
-  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150 },
-  expert: { targetGivens: 23, maxPerUnit: 4, attemptsPerPuzzle: 250 },
+  easy: { targetGivens: 38, maxPerUnit: 6, attemptsPerPuzzle: 40, maxCount: 100 },
+  medium: { targetGivens: 30, maxPerUnit: 5, attemptsPerPuzzle: 80, maxCount: 75 },
+  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150, maxCount: 50 },
+  expert: { targetGivens: 23, maxPerUnit: 4, attemptsPerPuzzle: 250, maxCount: 25 },
 };
 
 export function difficultyConfig(d: Difficulty): DifficultyConfig {
   return DIFFICULTY_CONFIGS[d];
+}
+
+export function maxCountForDifficulty(d: DifficultyOption): number {
+  if (d === "mixed")
+    return Math.min(...ALL_DIFFICULTIES.map((k) => DIFFICULTY_CONFIGS[k].maxCount));
+  return DIFFICULTY_CONFIGS[d].maxCount;
 }
 
 /* ---- Fonts ---- */

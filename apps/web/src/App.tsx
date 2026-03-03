@@ -2,6 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 
 type Difficulty = "easy" | "medium" | "hard" | "expert" | "mixed";
 
+const MAX_PUZZLES: Record<Difficulty, number> = {
+  easy: 100,
+  medium: 75,
+  hard: 50,
+  expert: 25,
+  mixed: 25,
+};
+
 type RuntimeConfig = {
   apiBaseUrl?: string;
 };
@@ -123,11 +131,12 @@ export default function App() {
             <input
               type="number"
               min={1}
-              max={100}
+              max={MAX_PUZZLES[difficulty]}
               value={count}
-              onChange={(e) =>
-                setCount(Math.min(100, Math.max(1, parseInt(e.target.value || "1", 10) || 1)))
-              }
+              onChange={(e) => {
+                const max = MAX_PUZZLES[difficulty];
+                setCount(Math.min(max, Math.max(1, parseInt(e.target.value || "1", 10) || 1)));
+              }}
             />
           </label>
 
@@ -135,7 +144,11 @@ export default function App() {
             Difficulty
             <select
               value={difficulty}
-              onChange={(e) => setDifficulty(e.target.value as Difficulty)}
+              onChange={(e) => {
+                const d = e.target.value as Difficulty;
+                setDifficulty(d);
+                setCount((prev) => Math.min(prev, MAX_PUZZLES[d]));
+              }}
             >
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
