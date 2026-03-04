@@ -23,9 +23,9 @@ const DIFFICULTY_CONFIGS: Record<Difficulty, DifficultyConfig> = {
   // targetGivens: how many cells are pre-filled (fewer = harder)
   // maxPerUnit: max givens allowed in any single row/col/box (prevents easy clusters)
   // attemptsPerPuzzle: harder puzzles need more generation retries
-  easy: { targetGivens: 38, maxPerUnit: 6, attemptsPerPuzzle: 40, maxCount: 100 },
-  medium: { targetGivens: 30, maxPerUnit: 5, attemptsPerPuzzle: 80, maxCount: 75 },
-  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150, maxCount: 50 },
+  easy: { targetGivens: 38, maxPerUnit: 6, attemptsPerPuzzle: 40, maxCount: 50 },
+  medium: { targetGivens: 30, maxPerUnit: 5, attemptsPerPuzzle: 80, maxCount: 50 },
+  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150, maxCount: 25 },
   expert: { targetGivens: 23, maxPerUnit: 4, attemptsPerPuzzle: 250, maxCount: 25 },
 };
 

@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from "react";
 type Difficulty = "easy" | "medium" | "hard" | "expert" | "mixed";
 
 const MAX_PUZZLES: Record<Difficulty, number> = {
-  easy: 100,
-  medium: 75,
-  hard: 50,
+  easy: 50,
+  medium: 50,
+  hard: 25,
   expert: 25,
   mixed: 25,
 };

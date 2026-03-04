@@ -6,10 +6,38 @@
     Roboto,
     Arial,
     sans-serif;
+  color-scheme: light dark;
+  --bg: #f6f6f6;
+  --card-bg: #fff;
+  --card-border: #ddd;
+  --text: #222;
+  --input-border: #ccc;
+  --input-bg: #fff;
+  --btn-bg: #111;
+  --btn-text: #fff;
+  --error-bg: #fff2f2;
+  --error-border: #f0baba;
+  --code-bg: #f1f1f1;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --card-bg: #2a2a2a;
+    --card-border: #444;
+    --text: #e0e0e0;
+    --input-border: #555;
+    --input-bg: #333;
+    --btn-bg: #e0e0e0;
+    --btn-text: #111;
+    --error-bg: #3a1f1f;
+    --error-border: #6b3a3a;
+    --code-bg: #333;
+  }
 }
 body {
   margin: 0;
-  background: #f6f6f6;
+  background: var(--bg);
+  color: var(--text);
 }
 .wrap {
   min-height: 100vh;
@@ -18,9 +46,9 @@ body {
   padding: 24px;
 }
 .card {
-  width: min(560px, 96vw);
-  background: #fff;
-  border: 1px solid #ddd;
+  width: min(560px, 100%);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 14px;
   padding: 18px;
 }
@@ -33,7 +61,7 @@ label {
   gap: 6px;
   margin: 10px 0;
   font-size: 13px;
-  color: #222;
+  color: var(--text);
 }
 .checkbox-label {
   display: flex;
@@ -49,11 +77,13 @@ label {
 input,
 select {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--input-border);
   border-radius: 10px;
   font-size: 14px;
   box-sizing: border-box;
   height: 42px;
+  background: var(--input-bg);
+  color: var(--text);
 }
 .row {
   display: grid;
@@ -71,8 +101,8 @@ button {
   border: 0;
   border-radius: 12px;
   font-weight: 700;
-  background: #111;
-  color: #fff;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   cursor: pointer;
   margin-top: 10px;
 }
@@ -81,14 +111,19 @@ button:disabled {
   cursor: not-allowed;
 }
 .error {
-  background: #fff2f2;
-  border: 1px solid #f0baba;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   padding: 10px;
   border-radius: 10px;
   white-space: pre-wrap;
 }
 code {
-  background: #f1f1f1;
+  background: var(--code-bg);
   padding: 2px 6px;
   border-radius: 8px;
+}
+@media (max-width: 480px) {
+  .row3 {
+    grid-template-columns: 1fr;
+  }
 }

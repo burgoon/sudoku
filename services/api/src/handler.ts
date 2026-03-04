@@ -34,7 +34,7 @@ function sanitiseInput(raw: GenerateRequest) {
       String(raw.title ?? "")
         .trim()
         .slice(0, 80) || DEFAULTS.title,
-    count: clampInt(Number(raw.count) || DEFAULTS.count, 1, 100),
+    count: clampInt(Number(raw.count) || DEFAULTS.count, 1, 50),
     difficulty: oneOf(raw.difficulty, VALID_DIFFICULTIES, DEFAULTS.difficulty),
     font: oneOf(raw.font, VALID_FONTS, DEFAULTS.font),
     includeCover: raw.includeCover !== false,
