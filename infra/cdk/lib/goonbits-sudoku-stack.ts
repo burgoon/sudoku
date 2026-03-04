@@ -7,6 +7,8 @@ import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import * as route53 from "aws-cdk-lib/aws-route53";
+import * as targets from "aws-cdk-lib/aws-route53-targets";
 import * as apigwv2 from "aws-cdk-lib/aws-apigatewayv2";
 import * as integrations from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -59,7 +61,7 @@ export class GoonbitsSudokuStack extends Stack {
       entry: path.join(repoRoot, "services", "api", "src", "handler.ts"),
       handler: "handler",
       timeout: Duration.seconds(45),
-      memorySize: 1024,
+      memorySize: 2048,
       bundling: {
         minify: true,
         sourceMap: false,
@@ -95,9 +97,32 @@ export class GoonbitsSudokuStack extends Stack {
       ],
     });
 
+    /* ---------- DNS (when custom domain is provided) ---------- */
+
+    if (customDomain) {
+      const zoneName = customDomain.split(".").slice(-2).join(".");
+      const zone = route53.HostedZone.fromLookup(this, "HostedZone", {
+        domainName: zoneName,
+      });
+
+      new route53.ARecord(this, "DnsAlias", {
+        zone,
+        recordName: customDomain,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+
+      new route53.AaaaRecord(this, "DnsAliasV6", {
+        zone,
+        recordName: customDomain,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+    }
+
     /* ---------- Outputs ---------- */
 
-    new CfnOutput(this, "WebUrl", { value: `https://${distribution.distributionDomainName}` });
+    new CfnOutput(this, "WebUrl", {
+      value: `https://${customDomain ?? distribution.distributionDomainName}`,
+    });
     new CfnOutput(this, "ApiBaseUrl", { value: httpApi.apiEndpoint });
   }
 }

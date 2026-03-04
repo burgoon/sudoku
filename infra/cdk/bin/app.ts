@@ -4,5 +4,8 @@ import { GoonbitsSudokuStack } from "../lib/goonbits-sudoku-stack.js";
 
 const app = new App();
 new GoonbitsSudokuStack(app, "GoonbitsSudokuStack", {
-  env: { region: "us-east-1" },
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: "us-east-1",
+  },
 });

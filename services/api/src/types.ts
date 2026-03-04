@@ -25,8 +25,8 @@ const DIFFICULTY_CONFIGS: Record<Difficulty, DifficultyConfig> = {
   // attemptsPerPuzzle: harder puzzles need more generation retries
   easy: { targetGivens: 38, maxPerUnit: 6, attemptsPerPuzzle: 40, maxCount: 50 },
   medium: { targetGivens: 30, maxPerUnit: 5, attemptsPerPuzzle: 80, maxCount: 50 },
-  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150, maxCount: 25 },
-  expert: { targetGivens: 23, maxPerUnit: 4, attemptsPerPuzzle: 250, maxCount: 25 },
+  hard: { targetGivens: 26, maxPerUnit: 4, attemptsPerPuzzle: 150, maxCount: 10 },
+  expert: { targetGivens: 23, maxPerUnit: 4, attemptsPerPuzzle: 250, maxCount: 10 },
 };
 
 export function difficultyConfig(d: Difficulty): DifficultyConfig {
